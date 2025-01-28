@@ -43,3 +43,31 @@ h1 {
 .crossed {
   text-decoration: line-through;
 }
+
+/* Status: Não iniciado */
+.status-not-started {
+  background-color: #f0f0f0; /* Cinza claro */
+  color: #555;
+}
+
+/* Status: Em andamento */
+.status-in-progress {
+  background-color: #e0f3ff; /* Azul claro */
+  color: #007bff; /* Azul */
+}
+
+/* Status: Concluída */
+.status-completed {
+  background-color: #d4edda; /* Verde claro */
+  color: #28a745; /* Verde */
+}
+
+/* Ajustar o estilo do dropdown */
+select {
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+

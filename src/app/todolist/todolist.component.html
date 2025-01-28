@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>To-Do Application</h1>
+  <h1>Lista de Tarefas</h1>
 
   <hr>
   <form id="submitForm" (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
@@ -19,6 +19,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Tarefa</th>
+      <th scope="col">Status</th>
       <th scope="col">Completado</th>
       <th scope="col">Apagar</th>
       <th scope="col">Editar</th>
@@ -29,30 +30,37 @@
     <tr *ngFor="let t of taskArray; index as i">
       <th scope="row">{{ i + 1 }}</th>
       <td>
-        <!-- Campo de texto para edição -->
         <input [ngClass]="{'edit': t.isEditable, 'not-edit': !t.isEditable, 'crossed': t.isCompleted}"
                #taskinput type="text" class="form-control" id="taskInTable" [value]="t.taskName"
                [readOnly]="!t.isEditable">
       </td>
       <td>
-        <!-- Checkbox para marcar como completado -->
+        <!-- Dropdown para mudar status manualmente -->
+        <select
+          [ngClass]="getStatusClass(t.status)"
+          (change)="onStatusChange(i, $any($event.target).value)">
+          <option value="Não iniciado" [selected]="t.status === 'Não iniciado'">Não iniciado</option>
+          <option value="Em andamento" [selected]="t.status === 'Em andamento'">Em andamento</option>
+          <option value="Concluída" [selected]="t.status === 'Concluída'">Concluída</option>
+        </select>
+      </td>
+
+      <td>
         <input (change)="onCheck(i)" id="myCheckbox" type="checkbox" [checked]="t.isCompleted">
       </td>
       <td>
-        <!-- Botão para apagar a tarefa -->
         <button id="delete" class="btn btn-danger btn-sm" (click)="onDelete(i)">Delete</button>
       </td>
       <td>
-        <!-- Botão para editar a tarefa -->
-        <button id="edit" class="btn btn-primary btn-sm" (click)="onEdit(i)"
-                [disabled]="t.isEditable">Edit</button>
+        <button id="edit" class="btn btn-primary btn-sm" (click)="onEdit(i)" [disabled]="t.isEditable">Edit</button>
       </td>
       <td>
-        <!-- Botão para salvar a edição -->
         <button id="save" class="btn btn-warning btn-sm" (click)="onSave(i, taskinput.value)"
                 [disabled]="!t.isEditable">Save</button>
       </td>
     </tr>
     </tbody>
   </table>
+
+
 </div>
