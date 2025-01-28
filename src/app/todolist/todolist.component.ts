@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -6,34 +6,47 @@ import { NgForm } from '@angular/forms';
   templateUrl: './todolist.component.html',
   styleUrls: ['./todolist.component.css']
 })
-export class TodolistComponent {
+export class TodolistComponent implements OnInit {
+  taskArray = [{ taskName: 'Brush teeth', isCompleted: false, isEditable: false }];
 
-  taskArray = [
-    { taskName: "Arroz", isCompleted: false }
-  ];
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 
   onSubmit(form: NgForm) {
     console.log(form);
 
-    // Adiciona a nova tarefa ao array
     this.taskArray.push({
-      taskName: form.controls["task"].value,
-      isCompleted: false
-    });
+      taskName: form.controls['task'].value,
+      isCompleted: false,
+      isEditable: false
+    })
 
-    // Reseta o formulário
     form.reset();
   }
 
   onDelete(index: number) {
     console.log(index);
-    // Remove a tarefa do array
+
     this.taskArray.splice(index, 1);
   }
 
   onCheck(index: number) {
-    // Alterna o estado de isCompleted da tarefa
+    console.log(this.taskArray);
+
     this.taskArray[index].isCompleted = !this.taskArray[index].isCompleted;
-    console.log(this.taskArray[index]);
   }
+
+  onEdit(index: number) {
+    this.taskArray[index].isEditable = true;
+  }
+
+  onSave(index: number, newtask: string) {
+    this.taskArray[index].taskName = newtask;
+    this.taskArray[index].isEditable = false;
+  }
+
+
+
 }
